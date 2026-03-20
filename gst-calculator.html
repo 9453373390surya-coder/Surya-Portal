@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GST Calculator | Professional Tool</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator-box {
+            background: rgba(22, 27, 34, 0.9);
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 2px solid rgba(56, 139, 253, 0.3);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        h2 {
+            color: #58a6ff;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+            color: #8b949e;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: white;
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #58a6ff;
+        }
+        .calc-btn {
+            background-color: #21262d;
+            border: 2px solid #58a6ff;
+            color: #58a6ff;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        .calc-btn:hover {
+            background-color: #58a6ff;
+            color: white;
+        }
+        .result-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: #0d1117;
+            border-radius: 6px;
+            border: 1px dashed #58a6ff;
+            display: none; /* Result pehle hide rahega */
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-top: 10px;
+            border-top: 1px solid #30363d;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #58a6ff;
+        }
+        .gst-amount { color: #ff4d4d; }
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+        .back-btn:hover { color: #58a6ff; }
+    </style>
+</head>
+<body>
+
+    <div class="calculator-box">
+        <h2>GST Calculator</h2>
+        
+        <div class="input-group">
+            <label>Amount (₹)</label>
+            <input type="number" id="baseAmount" placeholder="Enter amount..." required>
+        </div>
+
+        <div class="input-group">
+            <label>GST Rate (%)</label>
+            <select id="gstRate">
+                <option value="5">5%</option>
+                <option value="12">12%</option>
+                <option value="18" selected>18%</option>
+                <option value="28">28%</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Action</label>
+            <select id="calcType">
+                <option value="add">Add GST (+)</option>
+                <option value="remove">Remove GST (-)</option>
+            </select>
+        </div>
+
+        <button class="calc-btn" onclick="calculate()">Calculate</button>
+
+        <div class="result-box" id="resultOutput">
+            <div class="result-item">
+                <span>Original Amount:</span>
+                <span id="displayOriginal">₹0.00</span>
+            </div>
+            <div class="result-item gst-amount">
+                <span>GST Amount:</span>
+                <span id="displayGst">₹0.00</span>
+            </div>
+            <div class="result-item">
+                <span>Net Amount:</span>
+                <span id="displayNet">₹0.00</span>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-btn">← Back to Main Portal</a>
+    </div>
+
+    <script>
+        function calculate() {
+            let amount = parseFloat(document.getElementById('baseAmount').value);
+            let rate = parseFloat(document.getElementById('gstRate').value);
+            let type = document.getElementById('calcType').value;
+            
+            if (isNaN(amount) || amount <= 0) {
+                alert("Please enter a valid amount greater than 0.");
+                return;
+            }
+
+            let gstAmount = 0;
+            let netAmount = 0;
+
+            if (type === "add") {
+                // Formula to Add GST
+                gstAmount = (amount * rate) / 100;
+                netAmount = amount + gstAmount;
+            } else {
+                // Formula to Remove GST
+                gstAmount = amount - (amount * (100 / (100 + rate)));
+                netAmount = amount - gstAmount;
+            }
+
+            // Screen par result dikhana
+            document.getElementById('displayOriginal').innerText = "₹" + amount.toFixed(2);
+            document.getElementById('displayGst').innerText = "₹" + gstAmount.toFixed(2);
+            document.getElementById('displayNet').innerText = "₹" + netAmount.toFixed(2);
+            
+            // Result box ko visible karna
+            document.getElementById('resultOutput').style.display = "block";
+        }
+    </script>
+</body>
+</html>

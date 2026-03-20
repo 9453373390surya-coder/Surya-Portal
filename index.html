@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surya & Associates | Finance, Tech & The Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ==============================
+           1. Global Reset & Base
+        ============================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117; 
+            color: #c9d1d9; 
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(103, 58, 183, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 90%, rgba(26, 35, 126, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(216, 27, 96, 0.06) 0%, transparent 50%),
+                #0d1117;
+            z-index: -2; 
+        }
+        body::after {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="urlNoiseFilter"/></svg>');
+            opacity: 0.015; 
+            z-index: -1; pointer-events: none;
+        }
+
+        /* ==============================
+           2. Layout Containers
+        ============================== */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .main-content { padding: 100px 0 60px; }
+
+        /* ==============================
+           3. Header & Navigation
+        ============================== */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(13, 17, 23, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(56, 139, 253, 0.2);
+            z-index: 1000; padding: 15px 0; transition: all 0.3s ease;
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo-group { display: flex; align-items: center; gap: 10px; }
+        .logo { font-size: 1.8em; font-weight: 800; color: #58a6ff; letter-spacing: 1px; text-decoration: none; transition: color 0.3s; }
+        .logo:hover { color: #1f6feb; }
+        .logo-divider { color: rgba(139, 148, 158, 0.5); font-size: 1.2em; }
+        .tagline { color: #8b949e; font-size: 0.9em; font-weight: 400; }
+        nav ul { list-style: none; display: flex; gap: 25px; }
+        nav ul li a { text-decoration: none; color: #c9d1d9; font-size: 0.95em; font-weight: 500; transition: color 0.3s ease, transform 0.2s ease; }
+        nav ul li a:hover { color: #58a6ff; transform: translateY(-1px); }
+        .lang-link { font-size: 1.1em !important; color: rgba(201, 209, 217, 0.6) !important; }
+        .lang-link:hover { color: #c9d1d9 !important; }
+
+        /* ==============================
+           4. Section Titles
+        ============================== */
+        .section-header { margin-bottom: 40px; text-align: center; }
+        .section-title { font-size: 2.2em; font-weight: 700; color: #58a6ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .section-subtitle { font-size: 1em; color: #8b949e; max-width: 600px; margin: 0 auto; }
+
+        /* ==============================
+           5. Professional Tools Hub
+        ============================== */
+        .tools-section { padding: 60px 0; background-image: radial-gradient(circle at center, rgba(103, 58, 183, 0.02) 0%, transparent 60%); }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        
+        .tool-card {
+            background: rgba(22, 27, 34, 0.9); backdrop-filter: blur(10px);
+            border: 2px solid rgba(56, 139, 253, 0.2); border-radius: 12px;
+            padding: 30px; transition: all 0.3s ease; cursor: pointer;
+            position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 15px; height: 100%;
+        }
+        .tool-card::before {
+            content: ''; position: absolute; top: 50%; left: 50%; width: 100px; height: 100px;
+            background: radial-gradient(circle, rgba(56, 139, 253, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%); border-radius: 50%; transition: all 0.5s ease; z-index: -1; opacity: 0.5;
+        }
+        .tool-card:hover { transform: translateY(-8px); border-color: rgba(56, 139, 253, 0.5); background: rgba(22, 27, 34, 0.98); }
+        .tool-card:hover::before { width: 250px; height: 250px; background: radial-gradient(circle, rgba(56, 139, 253, 0.2) 0%, transparent 70%); opacity: 1; }
+        .tool-icon { font-size: 2.5em; color: #58a6ff; transition: color 0.3s; }
+        .tool-title { font-size: 1.25em; font-weight: 600; color: #c9d1d9; transition: color 0.3s; }
+        .tool-desc { font-size: 0.9em; color: #8b949e; }
+        .tool-hover-link { position: absolute; bottom: 20px; right: 20px; font-size: 1.2em; color: rgba(139, 148, 158, 0.5); transition: color 0.3s, transform 0.2s; }
+        .tool-card:hover .tool-hover-link { color: #58a6ff; transform: translateX(5px); }
+
+        /* ==============================
+           6. The Dark Portal Section
+        ============================== */
+        .dark-portal-section {
+            padding: 80px 0;
+            background: radial-gradient(circle at top right, rgba(216, 27, 96, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at bottom left, rgba(103, 58, 183, 0.08) 0%, transparent 50%), #0d1117;
+            position: relative; overflow: hidden; border-top: 2px solid rgba(216, 27, 96, 0.2); margin-top: 40px;
+        }
+        .dark-portal-section::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(circle at 10% 10%, rgba(103, 58, 183, 0.02) 0%, transparent 30%),
+                              radial-gradient(circle at 80% 90%, rgba(26, 35, 126, 0.02) 0%, transparent 30%),
+                              radial-gradient(circle at 50% 50%, rgba(216, 27, 96, 0.04) 0%, transparent 40%);
+            opacity: 0.8; pointer-events: none;
+        }
+        .section-header.horror-header .section-title { color: #ff4d4d !important; text-shadow: 0 0 10px rgba(216, 27, 96, 0.5); }
+        .dark-portal-content { text-align: center; max-width: 600px; margin: 0 auto; position: relative; z-index: 10; }
+        .dark-portal-desc { color: rgba(201, 209, 217, 0.8) !important; margin-bottom: 40px; }
+        .horror-btn { background-color: #1a0000; border-color: #590000 !important; color: #ff4d4d; border: 2px solid; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-size: 1.05em; font-weight: bold; transition: all 0.3s ease; display: inline-block; cursor: pointer; }
+        .horror-btn:hover { background-color: #590000; color: white; box-shadow: 0 0 15px rgba(216, 27, 96, 0.8); }
+
+        /* ==============================
+           7. Footer
+        ============================== */
+        footer { background: rgba(13, 17, 23, 0.95); border-top: 2px solid rgba(56, 139, 253, 0.2); padding: 40px 0; color: #8b949e; font-size: 0.9em; text-align: center; }
+        .footer-content { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+        .footer-logo { font-weight: 700; color: #58a6ff; }
+        .footer-links ul { list-style: none; display: flex; gap: 20px; }
+        .footer-links ul li a { text-decoration: none; color: rgba(201, 209, 217, 0.6) !important; transition: color 0.3s; }
+        .footer-links ul li a:hover { color: #c9d1d9 !important; }
+
+        @media (max-width: 768px) {
+            header { padding: 10px 0; }
+            .main-content { padding-top: 80px; }
+            .header-content { flex-direction: column; text-align: center; gap: 10px; }
+            .nav ul { flex-wrap: wrap; justify-content: center; }
+            .footer-content { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo-group">
+                <a href="index.html" class="logo">SURYA & ASSOCIATES</a>
+                <span class="logo-divider">|</span>
+                <span class="tagline">Finance,Compliance & Tech</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#tools">Tools Hub</a></li>
+                    <li><a href="horror-stories.html">The Dark Portal</a></li>
+                    <li><a href="japan-consulting.html">Future Firm</a></li>
+                    <li><a href="japan-consulting.html" class="lang-link" title="Switch to Japanese (Future Idea)"><i class="fas fa-flag-checkered"></i> 日</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="tools-section" id="tools">
+            <div class="section-header">
+                <h2 class="section-title">Professional Tools Hub</h2>
+                <p class="section-subtitle">A collection of essential financial and compliance tools designed for efficiency and insight.</p>
+            </div>
+            
+            <div class="tools-grid">
+                <div class="tool-card" onclick="window.location.href='gst-calculator.html'">
+                    <i class="fas fa-percent tool-icon"></i>
+                    <h3 class="tool-title">GST Calculator</h3>
+                    <p class="tool-desc">Instant Goods and Services Tax calculations based on current rules and slabs.</p>
+                    <i class="fas fa-arrow-right tool-hover-link"></i>
+                </div>
+                
+                <div class="tool-card" onclick="window.location.href='tax-planner.html'">
+                    <i class="fas fa-hand-holding-usd tool-icon"></i>
+                    <h3 class="tool-title">Income Tax Planner</h3>
+                    <p class="tool-desc">Quickly estimate your income tax liability and explore tax-saving options.</p>
+                    <i class="fas fa-arrow-right tool-hover-link"></i>
+                </div>
+                
+                <div class="tool-card" onclick="window.location.href='sip-tracker.html'">
+                    <i class="fas fa-chart-line tool-icon"></i>
+                    <h3 class="tool-title">Investment Tracker</h3>
+                    <p class="tool-desc">Track and visualize your potential SIP growth and investment returns.</p>
+                    <i class="fas fa-arrow-right tool-hover-link"></i>
+                </div>
+                
+                <div class="tool-card" onclick="window.location.href='audit-toolkit.html'">
+                    <i class="fas fa-magnifying-glass-dollar tool-icon"></i>
+                    <h3 class="tool-title">Audit Toolkit</h3>
+                    <p class="tool-desc">A suite of automated tools to streamline preliminary audit processes and calculations.</p>
+                    <i class="fas fa-arrow-right tool-hover-link"></i>
+                </div>
+                
+                <div class="tool-card business-tool" onclick="window.location.href='japan-consulting.html'">
+                    <i class="fas fa-briefcase tool-icon"></i>
+                    <h3 class="tool-title">Japan-India Consulting</h3>
+                    <p class="tool-desc">Placeholder for future services facilitating cross-border business and translation.</p>
+                    <i class="fas fa-arrow-right tool-hover-link"></i>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="dark-portal-section" id="darkTales">
+        <div class="container main-content">
+            <div class="section-header horror-header">
+                <h2 class="section-title">The Dark Portal</h2>
+                <p class="section-subtitle" style="color: #a2a2bd !important;">Enter if you dare... A collection of suspenseful mysteries and chilling dark tales.</p>
+            </div>
+            <div class="dark-portal-content">
+                <p class="dark-portal-desc">Venture beyond the professional world and explore a collection of true paranormal encounters, urban legends, and bone-chilling original horror stories.</p>
+                <a href="horror-stories.html" class="horror-btn"><i class="fas fa-door-open"></i> Read Real Horror Stories</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-group logo-group">
+                 <span class="footer-logo">Surya & Associates</span>
+                 <span class="logo-divider">|</span>
+                 <span>© 2026. Varanasi, India.</span>
+            </div>
+            <nav class="footer-links">
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Contribute Tales</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>

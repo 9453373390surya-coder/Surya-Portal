@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Toolkit | Materiality Calculator</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0d1117; color: #c9d1d9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .calculator-box { background: rgba(22, 27, 34, 0.9); padding: 40px 30px; border-radius: 12px; border: 2px solid rgba(56, 139, 253, 0.3); width: 100%; max-width: 450px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+        h2 { color: #58a6ff; text-align: center; margin-top: 0; margin-bottom: 25px; letter-spacing: 1px; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.95em; color: #8b949e; }
+        input { width: 100%; padding: 12px; background: #0d1117; border: 1px solid #30363d; color: white; border-radius: 6px; font-size: 1em; box-sizing: border-box; }
+        input:focus { outline: none; border-color: #58a6ff; }
+        .calc-btn { background-color: #21262d; border: 2px solid #58a6ff; color: #58a6ff; padding: 12px; width: 100%; border-radius: 6px; cursor: pointer; font-size: 1.1em; font-weight: bold; transition: all 0.3s; margin-top: 10px; }
+        .calc-btn:hover { background-color: #58a6ff; color: white; }
+        .result-box { margin-top: 25px; padding: 20px; background: #0d1117; border-radius: 6px; border: 1px dashed #58a6ff; display: none; }
+        .result-item { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 1.05em; }
+        .result-item:last-child { margin-bottom: 0; padding-top: 10px; border-top: 1px solid #30363d; font-weight: bold; font-size: 1.2em; color: #58a6ff; }
+        .back-btn { display: block; text-align: center; margin-top: 25px; color: #8b949e; text-decoration: none; font-size: 0.9em; transition: color 0.3s; }
+        .back-btn:hover { color: #58a6ff; }
+    </style>
+</head>
+<body>
+    <div class="calculator-box">
+        <h2>Audit Materiality Estimator</h2>
+        <div class="input-group">
+            <label>Client's Total Revenue (₹)</label>
+            <input type="number" id="revenue" placeholder="E.g., 50000000" required>
+        </div>
+        <button class="calc-btn" onclick="calculateMateriality()">Calculate Threshold</button>
+        <div class="result-box" id="resultOutput">
+            <div class="result-item"><span>Total Revenue:</span><span id="displayRev">₹0</span></div>
+            <div class="result-item"><span>Performance Materiality (75%):</span><span id="displayPerf">₹0</span></div>
+            <div class="result-item"><span>Overall Materiality (1%):</span><span id="displayMat">₹0</span></div>
+        </div>
+        <a href="index.html" class="back-btn">← Back to Main Portal</a>
+    </div>
+    <script>
+        function calculateMateriality() {
+            let rev = parseFloat(document.getElementById('revenue').value);
+            if (isNaN(rev) || rev <= 0) { alert("Please enter valid revenue."); return; }
+            let overall = rev * 0.01; // 1% of revenue rule of thumb
+            let perf = overall * 0.75; // 75% of overall
+            document.getElementById('displayRev').innerText = "₹" + rev.toLocaleString('en-IN');
+            document.getElementById('displayPerf').innerText = "₹" + perf.toLocaleString('en-IN');
+            document.getElementById('displayMat').innerText = "₹" + overall.toLocaleString('en-IN');
+            document.getElementById('resultOutput').style.display = "block";
+        }
+    </script>
+</body>
+</html>
